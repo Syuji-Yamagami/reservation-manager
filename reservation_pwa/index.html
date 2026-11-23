@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#173b67">
+<meta name="description" content="スマホ専用オフライン予約管理アプリ">
+<title>予約管理</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+<header class="topbar">
+    <div>
+        <p class="eyebrow">RESERVATION MANAGER</p>
+        <h1>予約管理</h1>
+    </div>
+    <span id="connectionState">端末内保存</span>
+</header>
+
+<main>
+
+<section id="page-list" class="page active">
+
+    <section class="stats">
+        <article class="stat-card">
+            <span>予約総数</span>
+            <strong id="totalCount">0</strong>
+        </article>
+
+        <article class="stat-card">
+            <span>未お渡し</span>
+            <strong id="pendingCount">0</strong>
+        </article>
+
+        <article class="stat-card">
+            <span>お渡し済み</span>
+            <strong id="completedCount">0</strong>
+        </article>
+    </section>
+
+    <section class="search-panel">
+        <label for="searchInput">予約者を検索</label>
+
+        <input
+            id="searchInput"
+            type="search"
+            placeholder="氏名・フリガナ・予約番号・商品番号"
+        >
+
+        <div id="kanaGrid" class="kana-grid"></div>
+
+        <div class="filter-row">
+            <button class="filter-button selected" data-filter="all">すべて</button>
+            <button class="filter-button" data-filter="pending">未お渡し</button>
+            <button class="filter-button" data-filter="completed">お渡し済み</button>
+        </div>
+    </section>
+
+    <div class="section-heading">
+        <h2>予約者一覧</h2>
+        <span id="resultCount">0件</span>
+    </div>
+
+    <div id="reservationList" class="reservation-list"></div>
+
+</section>
+
+<section id="page-data" class="page">
+
+    <h2>データ管理</h2>
+
+    <section class="management-card">
+        <h3>Excelから予約者を取り込む</h3>
+
+        <p>
+            Excelファイルの先頭シートから
+            A～G列の予約者情報を取り込む。
+        </p>
+
+        <label class="file-picker" for="excelFile">
+            Excelファイルを選択
+        </label>
+
+        <input
+            id="excelFile"
+            type="file"
+            accept=".xlsx"
+        >
+
+        <div class="import-mode">
+            <label>
+                <input type="radio" name="importMode" value="append" checked>
+                既存データに追加
+            </label>
+
+            <label>
+                <input type="radio" name="importMode" value="replace">
+                既存データを全て置き換える
+            </label>
+        </div>
+    </section>
+
+    <section class="management-card">
+        <h3>バックアップ</h3>
+
+        <button id="exportBackup" class="primary-button">
+            バックアップを書き出す
+        </button>
+
+        <label class="secondary-button file-picker" for="backupFile">
+            バックアップを復元
+        </label>
+
+        <input id="backupFile" type="file" accept=".json">
+    </section>
+
+    <section class="management-card">
+        <h3>保存情報</h3>
+        <p id="storageInfo">保存データを確認中...</p>
+        <p>予約情報はこのスマートフォン内に保存される。</p>
+    </section>
+
+</section>
+
+</main>
+
+<nav class="bottom-nav">
+    <button class="nav-button active" data-page="list">
+        <span>⌕</span>
+        予約一覧
+    </button>
+
+    <button class="nav-button" data-page="data">
+        <span>▤</span>
+        データ管理
+    </button>
+</nav>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="./xlsx.full.min.js"></script>
+<script src="./app.js"></script>
+
+</body>
+</html>
